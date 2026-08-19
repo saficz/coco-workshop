@@ -1,4 +1,4 @@
-Rule ID,Category,Rule Description,Decision / Owner
+cortex -c DEMORule ID,Category,Rule Description,Decision / Owner
 BR-001,Status Normalization,"Map all source status variants to Silver standard: APPROVED or PENDING. SAP: APPROVED/PENDING (direct). Oracle: VALIDATED→APPROVED. Baan: POSTED→APPROVED. Workday: Approved→APPROVED, In Review→PENDING.",Confirmed by Sarah Chen 2025-05-20. Implement as CASE statement in Silver DT.
 BR-002,Currency Handling,Do NOT convert currencies at the Silver layer. Silver stores the original transaction currency. Currency conversion happens in Gold using the corporate FX rate table maintained by Treasury.,Confirmed by Marcus Reinhardt and Jennifer Okafor. Treasury FX table is out of scope for this project.
 BR-003,Duplicate Detection,"Baan has a known issue: nightly extract sometimes sends the same invoice twice with different BAN_INVOICE_ID values but identical BAN_INVOICE_REF. Deduplicate on INVOICE_NUMBER using latest BAN_CREATED timestamp. Use QUALIFY ROW_NUMBER() OVER (PARTITION BY INVOICE_NUMBER ORDER BY CREATED_AT DESC) = 1.",Reported by Karen van der Berg 2025-05-15. Engineering to implement. Silver-layer concern not Bronze.
